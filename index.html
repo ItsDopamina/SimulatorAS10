@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Dopaminas Draw Race Simulador v19</title>
+<title>Dopaminas Draw Race Simulador v20</title>
 <style>
 :root{
   --win-normal:#4169e1;--top2:#00bfff;--win-dark:#000080;--high-team:#7fffd4;
@@ -99,6 +99,15 @@ td.stat-cell{width:95px}
 .bracket-header.br2 td{background:#ff4d9a}
 .bracket-header.br3 td{background:#9b59d0}
 .QUIT{background:var(--quit);color:#fff}
+.WIN_CUNT{background:#000080;color:#fff}
+.WIN_CUNT .cunt-sub{display:block;font-size:8px;font-weight:600;margin-top:1px;letter-spacing:.5px;opacity:.95}
+.ELIM_R1{background:#ff8a8a;color:#000}
+.ELIM_R2{background:#e23535;color:#fff}
+.ELIM_R3{background:#8b0000;color:#fff}
+.songs-panel{margin-top:20px;background:#fff8fb;border:2px solid var(--accent);border-radius:10px;padding:14px}
+.songs-panel h3{margin:0 0 12px;font-size:14px;text-transform:uppercase;letter-spacing:1px}
+.songs-panel ul{margin:0;padding-left:18px;font-size:12px;line-height:1.7}
+.songs-panel .ep-tag{display:inline-block;background:#111;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px;margin-right:6px;font-weight:700}
 .WINNER{background:var(--winner);color:#000}
 .RUNNERUP{background:var(--runnerup);color:#000}
 .ADV{background:#32cd32;color:#000}
@@ -143,39 +152,39 @@ td.stat-cell{width:95px}
 <body>
 <div class="container">
   <h1>DOPAMINAS DRAW RACE</h1>
-  <div class="subtitle">Simulador v16 · Beaver Format · Lalaparuza Twist · Mais Arquétipos</div>
+  <div class="subtitle">Simulador v20 路 Beaver 路 Lalaparuza 路 Bracket 路 CUNT Top5</div>
 
   <div class="flex-layout">
     <div class="box" style="max-width:340px">
       <h3>Banco de Queens</h3>
-      <input type="text" id="queenSearch" placeholder="🔎 Pesquisar queen (todas as temporadas)" oninput="renderQueens()" style="width:100%;margin-bottom:8px;padding:6px;border:1px solid var(--line);border-radius:6px">
+      <input type="text" id="queenSearch" placeholder="馃攷 Pesquisar queen (todas as temporadas)" oninput="renderQueens()" style="width:100%;margin-bottom:8px;padding:6px;border:1px solid var(--line);border-radius:6px">
       <select id="seasonSelector" style="margin-bottom:8px;width:100%" onchange="renderQueens()"></select>
       <button class="btn-mini" style="width:100%;margin-bottom:6px" onclick="selectEntireSeason()">Selecionar temporada inteira</button>
       <div style="display:flex;gap:4px;margin-bottom:6px">
         <input type="text" id="newQueenName" placeholder="Nome da nova drag" style="flex:1;padding:6px;border:1px solid var(--line);border-radius:6px;font-size:12px">
-        <button class="btn-mini" onclick="addNewQueen()" title="Adiciona em Aleatórias e ao elenco">＋</button>
+        <button class="btn-mini" onclick="addNewQueen()" title="Adiciona em Aleat贸rias e ao elenco">锛?/button>
       </div>
-      <button class="btn-mini" style="width:100%;margin-bottom:6px" onclick="saveAsNewSeason()">💾 Salvar seleção como nova temporada</button>
-      <button class="btn-mini" style="width:100%;margin-bottom:10px;background:#fee" onclick="deleteCustomSeason()">🗑️ Excluir temporada custom</button>
+      <button class="btn-mini" style="width:100%;margin-bottom:6px" onclick="saveAsNewSeason()">馃捑 Salvar sele莽茫o como nova temporada</button>
+      <button class="btn-mini" style="width:100%;margin-bottom:10px;background:#fee" onclick="deleteCustomSeason()">馃棏锔?Excluir temporada custom</button>
       <div id="dbList" style="height:340px;overflow-y:auto;border:1px solid var(--line);padding:6px;border-radius:6px;background:#fafafa"></div>
     </div>
 
     <div class="box" style="flex:1.8">
-      <h3>Configurações — <span id="count">0</span> selecionada(s)</h3>
+      <h3>Configura莽玫es 鈥?<span id="count">0</span> selecionada(s)</h3>
 
       <div class="cast-controls">
         <input type="number" id="randQty" value="12" min="3">
         <button class="btn-mini" onclick="randomizeCast()">Sortear elenco</button>
-        <button class="btn-mini" onclick="randomizeAll()">🎲 Aleatorizar tudo</button>
+        <button class="btn-mini" onclick="randomizeAll()">馃幉 Aleatorizar tudo</button>
         <button class="btn-mini" onclick="resetAll()">Limpar</button>
       </div>
       <div id="selectedList" style="border:1px solid var(--line);padding:10px;min-height:80px;max-height:130px;overflow-y:auto;margin-bottom:10px;background:#fafafa;border-radius:6px"></div>
 
-      <button class="btn-perso" onclick="openPerso()">✨ Personalizar elenco (tier, arquétipo, forças, fotos)</button>
+      <button class="btn-perso" onclick="openPerso()">鉁?Personalizar elenco (tier, arqu茅tipo, for莽as, fotos)</button>
 
       <div class="config-grid">
         <label>Split Premiere
-          <select id="isSplit"><option value="no">Não</option><option value="yes">Sim</option></select>
+          <select id="isSplit"><option value="no">N茫o</option><option value="yes">Sim</option></select>
         </label>
         <label>Formato Final
           <select id="fSize" onchange="updateUI()"><option value="3" selected>TOP 3</option><option value="2">TOP 2</option><option value="4">TOP 4</option></select>
@@ -185,12 +194,12 @@ td.stat-cell{width:95px}
             <option value="std">Normal/Regular</option>
             <option value="legacy">Legacy (Top 2 Dublam)</option>
             <option value="beaver">Beaver (Winner salva 1 do BTM)</option>
-            <option value="bracket">Bracket (18 queens · 12 eps · estratégico)</option>
+            <option value="bracket">Bracket (18 queens 路 12 eps 路 estrat茅gico)</option>
           </select>
         </label>
         <label>Desafio da Premiere
           <select id="premiereChal">
-            <option value="random">Aleatório</option>
+            <option value="random">Aleat贸rio</option>
           </select>
         </label>
 
@@ -205,69 +214,77 @@ td.stat-cell{width:95px}
           <div style="display:flex;flex-wrap:wrap;gap:14px;font-weight:500">
             <label><input type="checkbox" id="cGG" checked> Girl Group / Duo (Win Grupal)</label>
             <label><input type="checkbox" id="cActing" checked> Acting (High Team)</label>
-            <label><input type="checkbox" id="cQuit" checked> Desistências (QUIT)</label>
+            <label><input type="checkbox" id="cQuit" checked> Desist锚ncias (QUIT)</label>
             <label><input type="checkbox" id="cDouble"> Double Shantay</label>
             <label><input type="checkbox" id="cDoubleSashay"> Double Sashay</label>
-            <label><input type="checkbox" id="cNoElim"> Episódio sem eliminação</label>
+            <label><input type="checkbox" id="cNoElim"> Epis贸dio sem elimina莽茫o</label>
             <label><input type="checkbox" id="cReturn" onchange="document.getElementById('returnBox').style.display=this.checked?'block':'none'"> Retorno de queen</label>
-            <label><input type="checkbox" id="cGolden"> 🍫 Golden Bar (retorno imediato)</label>
-            <label><input type="checkbox" id="cBadunk"> 🎰 Badunktank (alavanca da salvação)</label>
-            <label><input type="checkbox" id="cLala"> 🎤 Lalaparuza Smackdown (forçada no Top 8)</label>
-            <label><input type="checkbox" id="cPremNoElim"> 🎬 Premiere TOP2 sem eliminação</label>
+            <label><input type="checkbox" id="cGolden"> 馃崼 Golden Bar (retorno imediato)</label>
+            <label><input type="checkbox" id="cBadunk"> 馃幇 Badunktank (alavanca da salva莽茫o)</label>
+            <label><input type="checkbox" id="cLala"> 馃帳 Lalaparuza Smackdown (for莽ada no Top 8)</label>
+            <label><input type="checkbox" id="cCunt"> 馃憫 CUNT (Top 5 鈥?3 desafios + 1 lipsync)</label>
+            <label><input type="checkbox" id="cPremNoElim"> 馃幀 Premiere TOP2 sem elimina莽茫o</label>
           </div>
           <div id="returnBox" style="display:none;margin-top:10px;padding-top:10px;border-top:1px dashed #ccc">
-            <label style="font-weight:500">Episódio do retorno
-              <select id="returnEp"><option value="auto">Automático (meio da temporada)</option></select>
+            <label style="font-weight:500">Epis贸dio do retorno
+              <select id="returnEp"><option value="auto">Autom谩tico (meio da temporada)</option></select>
             </label>
             <label style="font-weight:500;margin-top:6px;display:block">Como escolher quem volta?
               <select id="returnPick">
-                <option value="random">Aleatório (entre as eliminadas)</option>
+                <option value="random">Aleat贸rio (entre as eliminadas)</option>
                 <option value="prompt">Escolher na hora (entre as eliminadas)</option>
               </select>
             </label>
-            <div style="font-size:10px;color:var(--muted);margin-top:6px">Apenas queens já eliminadas no momento podem retornar. Ela compete normalmente nos episódios restantes.</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:6px">Apenas queens j谩 eliminadas no momento podem retornar. Ela compete normalmente nos epis贸dios restantes.</div>
         </div>
 
         <div class="section" id="bracketBox" style="display:none">
-          <b>🏆 Configuração — Formato Bracket (18 queens · 12 episódios)</b>
+          <b>馃弳 Configura莽茫o 鈥?Formato Bracket (18 queens 路 12 epis贸dios)</b>
           <div style="font-size:11px;color:#444;margin-bottom:8px;line-height:1.5">
-            Cast fixo de <b>18 queens</b> divididas em 3 brackets. Cada bracket joga 3 episódios sem eliminação (Comedy + Performance + Look). WIN=3pts, TOP2=2pts, SAFE=1pt para doar. Top 3 de cada bracket avançam (9). Wildcard retorna 1 (10). EP10=Snatch Game, EP11=Talent Show, EP12=Lalaparuza Final com 8 queens. <b>Twists desativados nesse formato.</b>
+            Cast fixo de <b>18 queens</b> divididas em 3 brackets. Cada bracket joga 3 epis贸dios sem elimina莽茫o (Comedy + Performance + Look). WIN=3pts, TOP2=2pts, SAFE=1pt para doar. Top 3 de cada bracket avan莽am (9). Wildcard retorna 1 (10). EP10=Snatch Game, EP11=Talent Show, EP12=Lalaparuza Final com 8 queens. <b>Twists desativados nesse formato.</b>
           </div>
-          <label style="font-weight:600;font-size:11px">Divisão dos brackets
+          <label style="font-weight:600;font-size:11px">Divis茫o dos brackets
             <select id="bracketMode">
-              <option value="random">Aleatório</option>
+              <option value="random">Aleat贸rio</option>
               <option value="manual">Eu escolho (modal)</option>
             </select>
           </label>
-          <label style="font-weight:600;font-size:11px;margin-top:8px;display:block">Wildcard (quem volta após 9 eliminações)
+          <label style="font-weight:600;font-size:11px;margin-top:8px;display:block">Wildcard (quem volta ap贸s 9 elimina莽玫es)
             <select id="wildcardMode">
-              <option value="random">Aleatório</option>
+              <option value="random">Aleat贸rio</option>
               <option value="prompt">Eu escolho na hora</option>
             </select>
           </label>
-          <button class="btn-mini" style="margin-top:10px;width:100%" onclick="openBracketEditor()">⚙️ Editar brackets / alianças manualmente</button>
+          <label style="font-weight:600;font-size:11px;margin-top:8px;display:block">Alian莽as (influencia doa莽玫es de pontos)
+            <select id="allianceMode">
+              <option value="random">Aleat贸rias</option>
+              <option value="manual">Eu escolho (modal)</option>
+              <option value="none">Sem alian莽as</option>
+            </select>
+          </label>
+          <button class="btn-mini" style="margin-top:10px;width:100%" onclick="openBracketEditor()">鈿欙笍 Editar brackets / alian莽as manualmente</button>
         </div>
       </div>
       </div>
 
       <button class="btn btn-main" onclick="runSimulation(false)">Simular temporada inteira</button>
-      <button class="btn btn-step" onclick="runSimulation(true)">▶ Simular passo a passo (1 ep por vez)</button>
+      <button class="btn btn-step" onclick="runSimulation(true)">鈻?Simular passo a passo (1 ep por vez)</button>
       <button class="btn btn-reset" onclick="resetAll()">Resetar elenco</button>
     </div>
   </div>
 
   <div id="stepControls" style="display:none;margin-top:18px;text-align:center">
-    <button class="btn btn-step" style="max-width:320px;display:inline-block" onclick="nextStep()">▶ Próximo episódio</button>
+    <button class="btn btn-step" style="max-width:320px;display:inline-block" onclick="nextStep()">鈻?Pr贸ximo epis贸dio</button>
   </div>
 
   <div id="tableOutput"></div>
 
   <div id="historyBar" class="history-bar" style="display:none">
-    <b>Histórico:</b>
-    <button class="btn-mini" onclick="saveCurrentRun()">💾 Salvar esta temporada</button>
-    <button class="btn-mini" onclick="downloadTableImage('png')">🖼️ Baixar como PNG</button>
-    <button class="btn-mini" onclick="downloadTableImage('jpeg')">🖼️ Baixar como JPEG</button>
-    <button class="btn-mini" onclick="clearHistory()">🗑 Limpar histórico</button>
+    <b>Hist贸rico:</b>
+    <button class="btn-mini" onclick="saveCurrentRun()">馃捑 Salvar esta temporada</button>
+    <button class="btn-mini" onclick="downloadTableImage('png')">馃柤锔?Baixar como PNG</button>
+    <button class="btn-mini" onclick="downloadTableImage('jpeg')">馃柤锔?Baixar como JPEG</button>
+    <button class="btn-mini" onclick="clearHistory()">馃棏 Limpar hist贸rico</button>
     <div id="historyList" style="margin-top:8px"></div>
   </div>
 </div>
@@ -275,13 +292,13 @@ td.stat-cell{width:95px}
 <!-- BRACKET EDITOR MODAL -->
 <div class="modal-bg" id="bracketModal">
   <div class="modal" style="max-width:900px">
-    <h2>Editar Brackets & Alianças</h2>
-    <div class="sub">18 queens · 3 brackets de 6 · alianças por bracket</div>
+    <h2>Editar Brackets & Alian莽as</h2>
+    <div class="sub">18 queens 路 3 brackets de 6 路 alian莽as por bracket</div>
     <div class="modal-actions">
-      <button class="btn-mini" onclick="randomizeBrackets()">🎲 Distribuir aleatoriamente</button>
-      <button class="btn-mini" onclick="randomizeAlliances()">💞 Randomizar alianças</button>
-      <button class="btn-mini" onclick="clearAlliances()">✕ Limpar alianças</button>
-      <button class="btn-mini" style="margin-left:auto;background:#111;color:#fff" onclick="closeBracketEditor()">✓ Fechar</button>
+      <button class="btn-mini" onclick="randomizeBrackets()">馃幉 Distribuir aleatoriamente</button>
+      <button class="btn-mini" onclick="randomizeAlliances()">馃挒 Randomizar alian莽as</button>
+      <button class="btn-mini" onclick="clearAlliances()">鉁?Limpar alian莽as</button>
+      <button class="btn-mini" style="margin-left:auto;background:#111;color:#fff" onclick="closeBracketEditor()">鉁?Fechar</button>
     </div>
     <div id="bracketEditorBody" style="font-size:12px"></div>
   </div>
@@ -291,12 +308,12 @@ td.stat-cell{width:95px}
 <div class="modal-bg" id="persoModal">
   <div class="modal">
     <h2>Personalizar elenco</h2>
-    <div class="sub">Tier · Arquétipo · Forças · Fraquezas · Foto</div>
+    <div class="sub">Tier 路 Arqu茅tipo 路 For莽as 路 Fraquezas 路 Foto</div>
     <div class="modal-actions">
-      <button class="btn-mini" onclick="randomizePerso()">🎲 Aleatorizar personalização</button>
-      <button class="btn-mini" onclick="clearPersoPhotos()">🚫 Pular fotos (limpar)</button>
-      <button class="btn-mini" onclick="resetPerso()">↺ Resetar personalização</button>
-      <button class="btn-mini" style="margin-left:auto;background:#111;color:#fff" onclick="closePerso()">✓ Salvar e fechar</button>
+      <button class="btn-mini" onclick="randomizePerso()">馃幉 Aleatorizar personaliza莽茫o</button>
+      <button class="btn-mini" onclick="clearPersoPhotos()">馃毇 Pular fotos (limpar)</button>
+      <button class="btn-mini" onclick="resetPerso()">鈫?Resetar personaliza莽茫o</button>
+      <button class="btn-mini" style="margin-left:auto;background:#111;color:#fff" onclick="closePerso()">鉁?Salvar e fechar</button>
     </div>
     <div class="perso-grid" id="persoGrid"></div>
   </div>
@@ -305,16 +322,16 @@ td.stat-cell{width:95px}
 <script>
 const DATA = {
   "Croqui 5":["Alice Hitobashira","Cristina e as Joias","Lovy","Lilach","Dopamina","Silly Cone","Ayla","Mama V","Uraez"],
-  "Dopas 1":["Umuarama","Debora The Crystal","Mama V","Átomo","Morango","Wismut","Adrenaline","Loyalt"],
+  "Dopas 1":["Umuarama","Debora The Crystal","Mama V","脕tomo","Morango","Wismut","Adrenaline","Loyalt"],
   "Gag 5":["The Rebel Princess","Gallatea Belini","Peter Dickshoe","Mr. E","Lilach Benevelle","Merry Sheperds","Imug","Asterisco","Iman","Johanna","Aria Dreamz","Gomorra","Laquanda Bittencourt"],
   "Dopas 2":["Carmine","Minerva","Outono","Vallery","Lovy","Unique","Belle Buvelle","Vincent","Alexa Blake","Rhaya"],
-  "Dopas 3":["Cristina e as Joias","Daphne Kendoll","Zerrore 404 Viruz","Venus Blec","Feffa L'Affair","Milk","Iman","Blondy Blunch","Yours Truly","Anya Intervention","Mizxs Envy","Lavínia"],
-  "Geekay 5":["Umuarama","Brianna","Feffa L'Affair","Luxystars","Menuchun","Chora Pendrive","Eriol","Violet Fire","Eye Cunt","Ameba Glitch","Minerva","Kira Shhá"],
+  "Dopas 3":["Cristina e as Joias","Daphne Kendoll","Zerrore 404 Viruz","Venus Blec","Feffa L'Affair","Milk","Iman","Blondy Blunch","Yours Truly","Anya Intervention","Mizxs Envy","Lav铆nia"],
+  "Geekay 5":["Umuarama","Brianna","Feffa L'Affair","Luxystars","Menuchun","Chora Pendrive","Eriol","Violet Fire","Eye Cunt","Ameba Glitch","Minerva","Kira Shh谩"],
   "Ockuuur 5":["Imug","Mei","Minerva","Divid","Utopia","Scarlet"],
   "Ockuuur AS2":["Marjorie","Kors","Theresa Bauhaus","Zapphire","Ieda","Gwen"],
   "Croqui 6":["Gallatea Belini","Cherry","A.R.T.","Theresa Bauhaus","Hades","Violet Fire","Amai Maffin","Minerva","Venom","Liza Pollezel"],
   "Bugirls 5":["Dopamina","Harphya","Nath Owl","Eggsy Moore","Mama V","Etherea","JJ","DJ Milla","Dot","Skye","Bear Gruntzie","Ambitchious"],
-  "Aleatórias":["Cristina e as Jóias","Milk Supamadre","Lavinia","Fabulous Feuer","Miranda Torres","Karma Deluxe","Imelda Shell","Scarlet Fever","Berlim","Lin Thequaria","Marmelady","Le Petit","Joji","Chris Kortree","Gallatea","Siwik","Yugoslavia","Melanina","Nix","Karma Lee","Gem Sunshine","Lizzergika","Jade Eccentric","Summer","Agness","Pearl","Madnix","Jack Love","Mana Mour","Sys","Verglarashian","Leona cappuccino","Pumpkin","Mort Vivants","Reflekta Moony","Grimhilde","Destiny Chips","Komany Behamfil","Heather","Storm Angel","Organza","Lila Chameleon","Grace Sephia","Pamela Ploc","Bibi Bispo","Eugenia","Samanta Beyblade","Inm Sonia","Cleo","Birila","Yumeko","Amai","Lavie","Dekka Pitada","Alice Petals","Kyla LaPurr","Prado de Violetas","Fancie","Jhayceen Storm","Bossy","Eleotéria","Elustra","Makanani","Nameless","Dazzler","Diwwa","Nebulla Blec","Thassa Star","Magkargo","Diesel","Marsh Moon","Luxianna De Luvv","Monet De Hann","Blonky"]
+  "Aleat贸rias":["Cristina e as J贸ias","Milk Supamadre","Lavinia","Fabulous Feuer","Miranda Torres","Karma Deluxe","Imelda Shell","Scarlet Fever","Berlim","Lin Thequaria","Marmelady","Le Petit","Joji","Chris Kortree","Gallatea","Siwik","Yugoslavia","Melanina","Nix","Karma Lee","Gem Sunshine","Lizzergika","Jade Eccentric","Summer","Agness","Pearl","Madnix","Jack Love","Mana Mour","Sys","Verglarashian","Leona cappuccino","Pumpkin","Mort Vivants","Reflekta Moony","Grimhilde","Destiny Chips","Komany Behamfil","Heather","Storm Angel","Organza","Lila Chameleon","Grace Sephia","Pamela Ploc","Bibi Bispo","Eugenia","Samanta Beyblade","Inm Sonia","Cleo","Birila","Yumeko","Amai","Lavie","Dekka Pitada","Alice Petals","Kyla LaPurr","Prado de Violetas","Fancie","Jhayceen Storm","Bossy","Eleot茅ria","Elustra","Makanani","Nameless","Dazzler","Diwwa","Nebulla Blec","Thassa Star","Magkargo","Diesel","Marsh Moon","Luxianna De Luvv","Monet De Hann","Blonky"]
 };
 
 const CHAL_LIST = ["Talent Show","Face-Off","Cover","Branding","Advert","Makeover","Design","Acting","Girl Group","Duo Challenge","Photoshoot","Character Design","Snatch Game","Ball","Roast","Remix","Rusical"];
@@ -331,7 +348,7 @@ const ARCHETYPES = {
   "All-Around":        {good:[], bad:[]},
   "Lip-sync Assassin": {good:["Face-Off"], bad:[]},
   "Underdog":          {good:[], bad:[]},
-  "Vilã/Polêmica":     {good:["Roast","Acting"], bad:["Girl Group","Duo Challenge"]},
+  "Vil茫/Pol锚mica":     {good:["Roast","Acting"], bad:["Girl Group","Duo Challenge"]},
   "Filler Queen":      {good:[], bad:["Snatch Game","Roast","Acting","Talent Show"]},
   "Narradora":         {good:["Roast","Acting","Advert","Snatch Game"], bad:["Ball"]},
   "Miss Congeniality": {good:["Girl Group","Duo Challenge","Advert"], bad:["Roast"]},
@@ -344,16 +361,16 @@ const ARCHETYPES = {
   "Polished Pro":      {good:["Branding","Photoshoot","Advert","Cover"], bad:[]},
 };
 
-const TAGS = ["Comédia","Atuação","Dança","Canto","Costura","Maquiagem","Conceito","Carisma","Lipsync","Improviso"];
+const TAGS = ["Com茅dia","Atua莽茫o","Dan莽a","Canto","Costura","Maquiagem","Conceito","Carisma","Lipsync","Improviso"];
 
 const LIPSYNC_SONGS = [
-"Born This Way — Lady Gaga","Bad Romance — Lady Gaga","Applause — Lady Gaga","Edge of Glory — Lady Gaga","Rain on Me — Lady Gaga & Ariana Grande","Stupid Love — Lady Gaga","Poker Face — Lady Gaga","Express Yourself — Madonna","Vogue — Madonna","Like a Prayer — Madonna","Material Girl — Madonna","Music — Madonna","Hung Up — Madonna","Toxic — Britney Spears","Stronger — Britney Spears","Oops!... I Did It Again — Britney Spears","I'm a Slave 4 U — Britney Spears","Gimme More — Britney Spears","Womanizer — Britney Spears","Til The World Ends — Britney Spears","Single Ladies — Beyoncé","Run the World (Girls) — Beyoncé","Crazy in Love — Beyoncé","Cuff It — Beyoncé","Love On Top — Beyoncé","Diva — Beyoncé","Heart of Glass — Blondie","Holding Out for a Hero — Bonnie Tyler","I Will Survive — Gloria Gaynor","It's Raining Men — The Weather Girls","Dancing Queen — ABBA","Gimme! Gimme! Gimme! — ABBA","I Wanna Dance With Somebody — Whitney Houston","It's Not Right but It's Okay — Whitney Houston","I'm Every Woman — Whitney Houston","Believe — Cher","Strong Enough — Cher","If I Could Turn Back Time — Cher","Proud Mary — Tina Turner","What's Love Got to Do With It — Tina Turner","Simply the Best — Tina Turner","Respect — Aretha Franklin","Natural Woman — Aretha Franklin","No Scrubs — TLC","Waterfalls — TLC","Don't Cha — Pussycat Dolls","Buttons — Pussycat Dolls","When I Grow Up — Pussycat Dolls","Wannabe — Spice Girls","Spice Up Your Life — Spice Girls","Lady Marmalade — Christina Aguilera","Dirrty — Christina Aguilera","Fighter — Christina Aguilera","Genie in a Bottle — Christina Aguilera","Show Me How You Burlesque — Christina Aguilera","Hold On — Wilson Phillips","Don't Stop Believin' — Journey","Goodbye to You — Scandal","Two of Hearts — Stacey Q","If I Were a Boy — Beyoncé","Listen — Beyoncé","Survivor — Destiny's Child","Bootylicious — Destiny's Child","Independent Women — Destiny's Child","I Try — Macy Gray","Rolling in the Deep — Adele","Hello — Adele","Set Fire to the Rain — Adele","No More Drama — Mary J. Blige","Family Affair — Mary J. Blige","Killing Me Softly — Fugees","Realness — RuPaul","Supermodel — RuPaul","Sissy That Walk — RuPaul","Cover Girl — RuPaul","Call Me Mother — RuPaul","Read U Wrote U — RuPaul","Look At Me — Geri Halliwell","I Hate Myself for Loving You — Joan Jett","Total Eclipse of the Heart — Bonnie Tyler","Maneater — Nelly Furtado","Promiscuous — Nelly Furtado","Say My Name — Destiny's Child","Bills, Bills, Bills — Destiny's Child","Womanizer — Britney Spears","Confident — Demi Lovato","Sorry Not Sorry — Demi Lovato","Cool For The Summer — Demi Lovato","Dark Horse — Katy Perry","Roar — Katy Perry","Firework — Katy Perry","Teenage Dream — Katy Perry","Wide Awake — Katy Perry","Problem — Ariana Grande","Side to Side — Ariana Grande","7 Rings — Ariana Grande","thank u, next — Ariana Grande","Break Free — Ariana Grande","Padam Padam — Kylie Minogue","Can't Get You Out of My Head — Kylie Minogue","Spinning Around — Kylie Minogue","All The Lovers — Kylie Minogue","Murder on the Dancefloor — Sophie Ellis-Bextor","Hot Stuff — Donna Summer","Last Dance — Donna Summer","MacArthur Park — Donna Summer","Bad Girls — Donna Summer","Show Me Love — Robin S","Finally — CeCe Peniston","Gypsy Woman — Crystal Waters","Vogue (Strike a Pose) — Madonna","Material Girl — Madonna"
+"Born This Way 鈥?Lady Gaga","Bad Romance 鈥?Lady Gaga","Applause 鈥?Lady Gaga","Edge of Glory 鈥?Lady Gaga","Rain on Me 鈥?Lady Gaga & Ariana Grande","Stupid Love 鈥?Lady Gaga","Poker Face 鈥?Lady Gaga","Express Yourself 鈥?Madonna","Vogue 鈥?Madonna","Like a Prayer 鈥?Madonna","Material Girl 鈥?Madonna","Music 鈥?Madonna","Hung Up 鈥?Madonna","Toxic 鈥?Britney Spears","Stronger 鈥?Britney Spears","Oops!... I Did It Again 鈥?Britney Spears","I'm a Slave 4 U 鈥?Britney Spears","Gimme More 鈥?Britney Spears","Womanizer 鈥?Britney Spears","Til The World Ends 鈥?Britney Spears","Single Ladies 鈥?Beyonc茅","Run the World (Girls) 鈥?Beyonc茅","Crazy in Love 鈥?Beyonc茅","Cuff It 鈥?Beyonc茅","Love On Top 鈥?Beyonc茅","Diva 鈥?Beyonc茅","Heart of Glass 鈥?Blondie","Holding Out for a Hero 鈥?Bonnie Tyler","I Will Survive 鈥?Gloria Gaynor","It's Raining Men 鈥?The Weather Girls","Dancing Queen 鈥?ABBA","Gimme! Gimme! Gimme! 鈥?ABBA","I Wanna Dance With Somebody 鈥?Whitney Houston","It's Not Right but It's Okay 鈥?Whitney Houston","I'm Every Woman 鈥?Whitney Houston","Believe 鈥?Cher","Strong Enough 鈥?Cher","If I Could Turn Back Time 鈥?Cher","Proud Mary 鈥?Tina Turner","What's Love Got to Do With It 鈥?Tina Turner","Simply the Best 鈥?Tina Turner","Respect 鈥?Aretha Franklin","Natural Woman 鈥?Aretha Franklin","No Scrubs 鈥?TLC","Waterfalls 鈥?TLC","Don't Cha 鈥?Pussycat Dolls","Buttons 鈥?Pussycat Dolls","When I Grow Up 鈥?Pussycat Dolls","Wannabe 鈥?Spice Girls","Spice Up Your Life 鈥?Spice Girls","Lady Marmalade 鈥?Christina Aguilera","Dirrty 鈥?Christina Aguilera","Fighter 鈥?Christina Aguilera","Genie in a Bottle 鈥?Christina Aguilera","Show Me How You Burlesque 鈥?Christina Aguilera","Hold On 鈥?Wilson Phillips","Don't Stop Believin' 鈥?Journey","Goodbye to You 鈥?Scandal","Two of Hearts 鈥?Stacey Q","If I Were a Boy 鈥?Beyonc茅","Listen 鈥?Beyonc茅","Survivor 鈥?Destiny's Child","Bootylicious 鈥?Destiny's Child","Independent Women 鈥?Destiny's Child","I Try 鈥?Macy Gray","Rolling in the Deep 鈥?Adele","Hello 鈥?Adele","Set Fire to the Rain 鈥?Adele","No More Drama 鈥?Mary J. Blige","Family Affair 鈥?Mary J. Blige","Killing Me Softly 鈥?Fugees","Realness 鈥?RuPaul","Supermodel 鈥?RuPaul","Sissy That Walk 鈥?RuPaul","Cover Girl 鈥?RuPaul","Call Me Mother 鈥?RuPaul","Read U Wrote U 鈥?RuPaul","Look At Me 鈥?Geri Halliwell","I Hate Myself for Loving You 鈥?Joan Jett","Total Eclipse of the Heart 鈥?Bonnie Tyler","Maneater 鈥?Nelly Furtado","Promiscuous 鈥?Nelly Furtado","Say My Name 鈥?Destiny's Child","Bills, Bills, Bills 鈥?Destiny's Child","Womanizer 鈥?Britney Spears","Confident 鈥?Demi Lovato","Sorry Not Sorry 鈥?Demi Lovato","Cool For The Summer 鈥?Demi Lovato","Dark Horse 鈥?Katy Perry","Roar 鈥?Katy Perry","Firework 鈥?Katy Perry","Teenage Dream 鈥?Katy Perry","Wide Awake 鈥?Katy Perry","Problem 鈥?Ariana Grande","Side to Side 鈥?Ariana Grande","7 Rings 鈥?Ariana Grande","thank u, next 鈥?Ariana Grande","Break Free 鈥?Ariana Grande","Padam Padam 鈥?Kylie Minogue","Can't Get You Out of My Head 鈥?Kylie Minogue","Spinning Around 鈥?Kylie Minogue","All The Lovers 鈥?Kylie Minogue","Murder on the Dancefloor 鈥?Sophie Ellis-Bextor","Hot Stuff 鈥?Donna Summer","Last Dance 鈥?Donna Summer","MacArthur Park 鈥?Donna Summer","Bad Girls 鈥?Donna Summer","Show Me Love 鈥?Robin S","Finally 鈥?CeCe Peniston","Gypsy Woman 鈥?Crystal Waters","Vogue (Strike a Pose) 鈥?Madonna","Material Girl 鈥?Madonna"
 ];
 function pickSong(){ return LIPSYNC_SONGS[Math.floor(Math.random()*LIPSYNC_SONGS.length)]; }
 const TAG_TO_CHAL = {
-  "Comédia":["Snatch Game","Roast","Acting","Advert","Rusical"],
-  "Atuação":["Acting","Snatch Game","Advert","Cover","Rusical"],
-  "Dança":["Girl Group","Duo Challenge","Remix","Talent Show","Rusical"],
+  "Com茅dia":["Snatch Game","Roast","Acting","Advert","Rusical"],
+  "Atua莽茫o":["Acting","Snatch Game","Advert","Cover","Rusical"],
+  "Dan莽a":["Girl Group","Duo Challenge","Remix","Talent Show","Rusical"],
   "Canto":["Cover","Remix","Girl Group","Duo Challenge","Talent Show","Rusical"],
   "Costura":["Design","Character Design","Ball","Makeover"],
   "Maquiagem":["Makeover","Photoshoot","Ball"],
@@ -373,7 +390,7 @@ function init(){
   const custom = JSON.parse(localStorage.getItem("ddr_customSeasons")||"{}");
   Object.keys(custom).forEach(k => { if(!DATA[k]) DATA[k] = custom[k]; });
   const extras = JSON.parse(localStorage.getItem("ddr_extraQueens")||"[]");
-  extras.forEach(n => { if(!DATA["Aleatórias"].includes(n)) DATA["Aleatórias"].push(n); });
+  extras.forEach(n => { if(!DATA["Aleat贸rias"].includes(n)) DATA["Aleat贸rias"].push(n); });
   const persoStore = JSON.parse(localStorage.getItem("ddr_perso")||"{}");
   Object.keys(persoStore).forEach(n => { perso[n] = persoStore[n]; });
 
@@ -392,7 +409,7 @@ function refreshSeasonSelector(){
   s.innerHTML = "";
   const custom = JSON.parse(localStorage.getItem("ddr_customSeasons")||"{}");
   Object.keys(DATA).forEach(k => {
-    const tag = custom[k] ? " ★" : "";
+    const tag = custom[k] ? " 鈽? : "";
     s.add(new Option(`${k}${tag} (${DATA[k].length})`, k));
   });
   if(cur && DATA[cur]) s.value = cur;
@@ -404,7 +421,7 @@ function addNewQueen(){
   if(!name) return;
   const exists = Object.values(DATA).some(arr => arr.includes(name));
   if(!exists){
-    DATA["Aleatórias"].push(name);
+    DATA["Aleat贸rias"].push(name);
     const extras = JSON.parse(localStorage.getItem("ddr_extraQueens")||"[]");
     extras.push(name);
     localStorage.setItem("ddr_extraQueens", JSON.stringify(extras));
@@ -420,7 +437,7 @@ function saveAsNewSeason(){
   if(selectedNames.length < 2) return alert("Selecione pelo menos 2 queens.");
   const name = prompt("Nome da nova temporada:", "Minha Temporada");
   if(!name) return;
-  if(DATA[name] && !confirm(`"${name}" já existe. Substituir?`)) return;
+  if(DATA[name] && !confirm(`"${name}" j谩 existe. Substituir?`)) return;
   DATA[name] = [...selectedNames];
   const custom = JSON.parse(localStorage.getItem("ddr_customSeasons")||"{}");
   custom[name] = DATA[name];
@@ -437,7 +454,7 @@ function saveAsNewSeason(){
 function deleteCustomSeason(){
   const name = document.getElementById("seasonSelector").value;
   const custom = JSON.parse(localStorage.getItem("ddr_customSeasons")||"{}");
-  if(!custom[name]) return alert("Só é possível excluir temporadas customizadas (★).");
+  if(!custom[name]) return alert("S贸 茅 poss铆vel excluir temporadas customizadas (鈽?.");
   if(!confirm(`Excluir temporada "${name}"?`)) return;
   delete custom[name];
   delete DATA[name];
@@ -493,15 +510,15 @@ function updateUI(){
   document.getElementById("selectedList").innerHTML = selectedNames.map(n => {
     const p = getPerso(n);
     const av = p.photo ? `<span class="avatar" style="background-image:url('${p.photo}');width:18px;height:18px;border-width:1px"></span>` : '';
-    return `<div class="queen-pill-sel">${av}${n} <span class="tier-tag tier-${p.tier.replace('+','plus')}">${p.tier}</span> <span onclick="toggleQueen('${escAttr(n)}')">✕</span></div>`;
+    return `<div class="queen-pill-sel">${av}${n} <span class="tier-tag tier-${p.tier.replace('+','plus')}">${p.tier}</span> <span onclick="toggleQueen('${escAttr(n)}')">鉁?/span></div>`;
   }).join('') || '<span style="color:#999;font-size:11px">Nenhuma queen selecionada</span>';
   const re = document.getElementById("returnEp");
   if(re){
     const fs = parseInt(document.getElementById("fSize").value) || 3;
     const totalEps = Math.max(selectedNames.length - fs, 1);
     const cur = re.value;
-    re.innerHTML = '<option value="auto">Automático (meio da temporada)</option>' +
-      Array.from({length: Math.max(totalEps-1, 0)}, (_,i)=>`<option value="${i+2}">Episódio ${i+2}</option>`).join('');
+    re.innerHTML = '<option value="auto">Autom谩tico (meio da temporada)</option>' +
+      Array.from({length: Math.max(totalEps-1, 0)}, (_,i)=>`<option value="${i+2}">Epis贸dio ${i+2}</option>`).join('');
     if([...re.options].some(o=>o.value===cur)) re.value = cur;
   }
   renderQueens();
@@ -525,6 +542,7 @@ function randomizeAll(){
   document.getElementById("elimType").value = fmts[Math.floor(Math.random()*fmts.length)];
   document.getElementById("premiereChal").value = "random";
   ["cGG","cActing","cQuit"].forEach(id=>document.getElementById(id).checked=true);
+  document.getElementById("cCunt").checked = Math.random()<0.4;
   document.getElementById("cDouble").checked = Math.random()<0.4;
   document.getElementById("cDoubleSashay").checked = Math.random()<0.3;
   document.getElementById("cNoElim").checked = Math.random()<0.4;
@@ -544,8 +562,8 @@ function removeFromQueue(i){ customQueue.splice(i,1); updateQueueDisplay(); }
 function updateQueueDisplay(){
   const el = document.getElementById("chalQueueDisplay");
   el.innerHTML = customQueue.length
-    ? customQueue.map((c,i)=>`<span class="queue-item" onclick="removeFromQueue(${i})">${i+1}. ${c} ✕</span>`).join(' ')
-    : '<span style="color:#999">Nenhum desafio na fila — usaremos aleatórios.</span>';
+    ? customQueue.map((c,i)=>`<span class="queue-item" onclick="removeFromQueue(${i})">${i+1}. ${c} 鉁?/span>`).join(' ')
+    : '<span style="color:#999">Nenhum desafio na fila 鈥?usaremos aleat贸rios.</span>';
 }
 
 function pickRandomChal(exclude){
@@ -560,7 +578,7 @@ function openPerso(){
   document.getElementById("persoModal").classList.add("on");
 }
 function closePerso(){ document.getElementById("persoModal").classList.remove("on"); updateUI(); }
-function resetPerso(){ if(!confirm("Resetar personalização de todas?")) return; selectedNames.forEach(n=> perso[n]=defaultPerso()); renderPersoGrid(); }
+function resetPerso(){ if(!confirm("Resetar personaliza莽茫o de todas?")) return; selectedNames.forEach(n=> perso[n]=defaultPerso()); renderPersoGrid(); }
 function clearPersoPhotos(){ selectedNames.forEach(n=>{ if(perso[n]) perso[n].photo=""; }); renderPersoGrid(); }
 function randomizePerso(){
   selectedNames.forEach(n=>{
@@ -592,8 +610,8 @@ function renderPersoGrid(){
       <div class="pc-body">
         <b>${n}</b>
         <label>Tier <select onchange="setPerso('${escAttr(n)}','tier',this.value)">${tierOpts}</select></label>
-        <label>Arquétipo <select onchange="setPerso('${escAttr(n)}','archetype',this.value)">${archOpts}</select></label>
-        <label>Forças & Fraquezas <span class="tag-help">(clique: 1x força · 2x fraqueza · 3x limpa)</span></label>
+        <label>Arqu茅tipo <select onchange="setPerso('${escAttr(n)}','archetype',this.value)">${archOpts}</select></label>
+        <label>For莽as & Fraquezas <span class="tag-help">(clique: 1x for莽a 路 2x fraqueza 路 3x limpa)</span></label>
         <div class="tag-row">${tagsHtml}</div>
         <label style="margin-top:8px">Foto <input type="file" accept="image/*" onchange="uploadPhoto('${escAttr(n)}',this)"></label>
       </div>
@@ -634,7 +652,7 @@ function lipsyncScore(q){
   s += (TIER_BONUS[p.tier] || 0) * 0.5;
   if(p.archetype === "Lip-sync Assassin") s += 3.0;
   if(p.strengths.includes("Lipsync")) s += 2.0;
-  if(p.strengths.includes("Dança")) s += 1.0;
+  if(p.strengths.includes("Dan莽a")) s += 1.0;
   if(p.weaknesses.includes("Lipsync")) s -= 2.0;
   return s;
 }
@@ -651,7 +669,7 @@ function runSimulation(stepMode){
   const cast = selectedNames.map(n => ({ name:n, track:[], out:false, rank:99, wins:0, outEp:999, returned:false, badunkUsed:false }));
   SIM = {
     cast, active:[...cast], eps:[], epCount:1,
-    doubleShantayUsed:false, doubleSashayUsed:false, returnUsed:false, noElimUsed:false,
+    doubleShantayUsed:false, doubleSashayUsed:false, returnUsed:false, noElimUsed:false, cuntUsed:false,
     eliminated:[], finished:false, pendingGolden:null,
     cfg:{
       fs,
@@ -672,6 +690,7 @@ function runSimulation(stepMode){
       gg: document.getElementById("cGG").checked,
       acting: document.getElementById("cActing").checked,
       quitOn: document.getElementById("cQuit").checked,
+      useCunt: document.getElementById("cCunt").checked,
     }
   };
   const totalEpsBeforeFinal = Math.max(SIM.active.length - fs, 1);
@@ -691,7 +710,7 @@ function runSimulation(stepMode){
 }
 
 function nextStep(){
-  if(!SIM || SIM.finished){ alert("Simulação concluída."); return; }
+  if(!SIM || SIM.finished){ alert("Simula莽茫o conclu铆da."); return; }
   simulateOneEpisode();
   renderTable();
   if(SIM.finished) document.getElementById("stepControls").style.display = "none";
@@ -716,7 +735,7 @@ function simulateOneEpisode(){
     let returnee = null;
     if(C.returnPickVal === "prompt"){
       const list = S.eliminated.map((q,i)=>`${i+1}. ${q.name} (eliminada no ep.${q.outEp})`).join("\n");
-      const pick = prompt(`Episódio do retorno (Ep.${S.epCount}). Quem deve voltar?\n\n${list}\n\nDigite o número:`);
+      const pick = prompt(`Epis贸dio do retorno (Ep.${S.epCount}). Quem deve voltar?\n\n${list}\n\nDigite o n煤mero:`);
       returnee = S.eliminated[parseInt(pick)-1] || null;
     } else {
       returnee = S.eliminated[Math.floor(Math.random()*S.eliminated.length)];
@@ -764,6 +783,15 @@ function simulateOneEpisode(){
   // assign lipsync song to this episode (any episode that has lipsync)
   S.eps[S.eps.length-1].song = pickSong();
 
+  if(C.useCunt && !S.cuntUsed && !isPremiere && S.active.length === 5){
+    S.cuntUsed = true;
+    // override challenge label
+    S.eps[S.eps.length-1].name = "CUNT";
+    S.eps[S.eps.length-1].cunt = true;
+    runCunt(parts);
+    cleanupAfterEp();
+    return;
+  }
   if(chal === "Lalaparuza" && !splitNoElim){ S.lalaUsed = true; runLalaparuza(parts); applyTwistsPostElim(); cleanupAfterEp(); return; }
 
   const isGroupWin = C.gg && (chal === "Girl Group" || chal === "Duo Challenge");
@@ -939,9 +967,9 @@ function finalizeSeason(){
 }
 
 function runLalaparuza(parts){
-  // AS10-style single-elimination tournament: 8 -> 4 -> 2 -> 1
-  // 4 first eliminations = 5/8th, 2 second = 3/4th, final = 1st & 2nd (RU)
-  // Season ENDS after this episode.
+  // CLASSIC TWIST FORMAT (Top 8): 4 duels, winners do another LSFTW, losers go to bottom.
+  // Winners (4): 2 duels 鈫?2 advance to TOP2 LSFTW (WIN/TOP2), 2 losers = HIGH.
+  // Losers (4): 1 saved (BEAVER), 3 lipsync, 50% elim 1 / 50% elim 2.
   const S = SIM;
   const ep = S.eps[S.eps.length-1];
   ep.lalaRounds = [];
@@ -962,37 +990,86 @@ function runLalaparuza(parts){
     return {winners, losers};
   }
 
-  // Round 1: 8 -> 4
-  const r1 = duelRound(parts, "Round 1 (Top 8)");
-  r1.losers.forEach((q,i)=>{
-    q.out = true; q.outEp = S.epCount; q.rank = 8 - i; // 5,6,7,8
-    q.track.push({status:"ELIM", mini:false, lalaRound:1});
-    S.eliminated.push(q);
-  });
-  // assign 5/8 placements (tied — order by score worst first)
-  const r1LosersSorted = r1.losers.slice().sort((a,b)=>a.score-b.score);
-  r1LosersSorted.forEach((q,i)=>{ q.rank = 8 - i; }); // 8th worst first
+  // Round 1: 8 鈫?4 winners + 4 bottom
+  const r1 = duelRound(parts, "Round 1 (Top 8 鈥?4 duelos)");
 
-  // Round 2: 4 -> 2
-  const r2 = duelRound(r1.winners, "Round 2 (Top 4)");
-  r2.losers.forEach((q,i)=>{
-    q.out = true; q.outEp = S.epCount;
-    q.track.push({status:"ELIM", mini:false, lalaRound:2});
-    S.eliminated.push(q);
-  });
-  const r2LosersSorted = r2.losers.slice().sort((a,b)=>a.score-b.score);
-  r2LosersSorted.forEach((q,i)=>{ q.rank = 4 - i; }); // 4th, 3rd
+  // Round 2 (winners): 4 鈫?2 advance, 2 = HIGH
+  const r2 = duelRound(r1.winners, "Round 2 (Winners' LSFTW)");
+  r2.losers.forEach(q => q.track.push({status:"HIGH", mini:false}));
 
-  // Round 3: 2 -> 1
-  const r3 = duelRound(r2.winners, "Round 3 (Final)");
-  const winQ = r3.winners[0], top2Q = r3.losers[0];
-  winQ.wins++; winQ.track.push({status:"WINNER", mini:false, lalaRound:3});
-  winQ.rank = 0;
-  top2Q.track.push({status:"RUNNERUP", mini:false, lalaRound:3});
-  top2Q.rank = 1;
-  // remove finalists from S.active
-  S.active = S.active.filter(q => q===winQ);
-  S.finished = true;
+  // Round 3 (TOP2 LSFTW): 2 鈫?WIN + TOP2
+  const finalSh = [...r2.winners].sort(()=>Math.random()-0.5);
+  finalSh.forEach(q => q.score = lipsyncScore(q));
+  const finalSong = pickSong();
+  const finalWinA = finalSh[0].score >= finalSh[1].score;
+  const winQ = finalWinA ? finalSh[0] : finalSh[1];
+  const top2Q = finalWinA ? finalSh[1] : finalSh[0];
+  ep.lalaRounds.push({label:"Round 3 (TOP2 鈥?LSFTW)", duels:[{a:finalSh[0].name, b:finalSh[1].name, winner:winQ.name, loser:top2Q.name, song:finalSong}]});
+  winQ.wins++;
+  winQ.track.push({status:"WIN", mini:false});
+  top2Q.wins++;
+  top2Q.track.push({status:"TOP2", mini:false});
+
+  // Bottom group (4 losers from R1): 1 BEAVER + 3 lipsync (50/50 elim 1 or 2)
+  const bottom = r1.losers.slice();
+  bottom.forEach(q => q.score = lipsyncScore(q));
+  // BEAVER = best lipsync of the 4 (Winner of the season would save them)
+  bottom.sort((a,b)=>b.score-a.score);
+  const beaver = bottom[0];
+  beaver.track.push({status:"SAVED", mini:false, beaver:true});
+  const btm3 = bottom.slice(1); // 3 queens
+  // determine how many eliminated: 50/50
+  const elimCount = Math.random() < 0.5 ? 1 : 2;
+  btm3.sort((a,b)=>a.score-b.score); // worst first
+  const btm3Song = pickSong();
+  ep.lalaRounds.push({
+    label:`Bottom LSFYL (${elimCount} eliminada${elimCount>1?'s':''})`,
+    duels:[{a:btm3[0].name, b:btm3[1].name + (btm3[2]?` & ${btm3[2].name}`:''), winner:btm3.slice(elimCount).map(q=>q.name).join(' & '), loser:btm3.slice(0,elimCount).map(q=>q.name).join(' & '), song:btm3Song}]
+  });
+  btm3.forEach((q,i) => {
+    if(i < elimCount){
+      q.out = true; q.outEp = S.epCount; q.rank = S.active.length - i;
+      q.track.push({status:"ELIM", mini:false});
+      S.eliminated.push(q);
+    } else {
+      q.track.push({status:"BTM2", mini:false});
+    }
+  });
+  S.active = S.active.filter(q => !q.out);
+}
+
+
+function runCunt(parts){
+  // Top 5 special episode: 3 different mini-challenges with 1 winner each, then bottom 2 lip-sync.
+  const S = SIM;
+  const ep = S.eps[S.eps.length-1];
+  ep.cuntDetails = [];
+  const subs = [
+    {label:"Design", chal:"Design", size:5},
+    {label:"Girl Group", chal:"Girl Group", size:4},
+    {label:"Public Speech", chal:"Acting", size:3},
+  ];
+  let pool = parts.slice();
+  const winnersInfo = [];
+  subs.forEach(sub => {
+    pool.forEach(q => q.score = computeScore(q, sub.chal));
+    pool.sort((a,b)=>b.score-a.score);
+    const winner = pool[0];
+    winner.wins++;
+    winner.track.push({status:"WIN_CUNT", mini:false, cuntSub:sub.label});
+    winnersInfo.push({label:sub.label, winner:winner.name});
+    ep.cuntDetails.push({sub:sub.label, participants:pool.map(q=>q.name), winner:winner.name});
+    pool = pool.filter(q => q !== winner);
+  });
+  // remaining 2 lip-sync for perman锚ncia
+  pool.forEach(q => q.score = lipsyncScore(q));
+  pool.sort((a,b)=>b.score-a.score);
+  const stays = pool[0], elim = pool[1];
+  const song = pickSong();
+  ep.cuntLipsync = {a:stays.name, b:elim.name, winner:stays.name, loser:elim.name, song};
+  stays.track.push({status:"BTM2", mini:false, cuntStay:true});
+  elim.track.push({status:"ELIM", mini:false, cuntOut:true});
+  elim.out = true; elim.outEp = S.epCount; elim.rank = S.active.length;
 }
 
 function runFaceOff(parts){
@@ -1046,16 +1123,16 @@ function renderTable(){
 
   let sections = [];
   if(isBracket){
-    const brLabels = ["BRACKET 1 · LARANJA","BRACKET 2 · ROSA","BRACKET 3 · ROXO"];
+    const brLabels = ["BRACKET 1 路 LARANJA","BRACKET 2 路 ROSA","BRACKET 3 路 ROXO"];
     const brClasses = ["br1","br2","br3"];
     const stillInRaceOrReturned = queens.filter(q => !q.bracketEliminated || q.returned);
     const bracketCut = queens.filter(q => q.bracketEliminated && !q.returned);
     if(SIM.phase >= 2 || SIM.finished || SIM.allBracketsCut){
       const topRows = stillInRaceOrReturned.slice().sort((a,b)=> (placements.get(a)||999) - (placements.get(b)||999) || a.name.localeCompare(b.name));
-      sections.push({label:"TOP / PÓS-BRACKET", cls:"", rows:topRows});
+      sections.push({label:"TOP / P脫S-BRACKET", cls:"", rows:topRows});
       [0,1,2].forEach(bi => {
         const rows = bracketCut.filter(q=>q.bracket===bi).slice().sort((a,b)=> a.name.localeCompare(b.name));
-        if(rows.length) sections.push({label:`${brLabels[bi]} · ELIMINADAS`, cls:brClasses[bi], rows});
+        if(rows.length) sections.push({label:`${brLabels[bi]} 路 ELIMINADAS`, cls:brClasses[bi], rows});
       });
     } else {
       [0,1,2].forEach(bi => {
@@ -1120,44 +1197,108 @@ function renderTable(){
                 d.status === "HIGH_TEAM" ? "HIGH TEAM" :
                 d.status === "TOP2" ? "TOP 2" :
                 d.status === "ELIM_GOLD" ? "ELIM" :
-                d.status === "BTM_BADUNK" ? "BTM ★" :
+                d.status === "BTM_BADUNK" ? "BTM 鈽? :
                 d.status === "BTM_BADUNK_PINK" ? "BTM" :
                 d.status === "DSHANTAY" ? "BTM" :
                 d.status;
         }
         let mini = d.mini ? `<span class="mini-label">Mini Chall. Winner</span>` : "";
         if(outcome && typeof d.pointsAtCut === 'number') mini += `<span class="mini-label">${d.pointsAtCut} pts</span>`;
-        if(d.donationTo) mini += `<span class="mini-label">Doou → ${d.donationTo}</span>`;
+        if(d.donationTo) mini += `<span class="mini-label">Doou 鈫?${d.donationTo}</span>`;
         if(d.receivedFrom?.length) mini += `<span class="mini-label">Recebeu: ${d.receivedFrom.join(', ')}</span>`;
         if(d.wildcardReturn) mini += `<span class="mini-label">Wildcard</span>`;
-        // Lipsync song display: only for queens who actually lipsynced (ELIM/BTM2 in normal eps; lala-marked cells)
-        const epData = SIM.eps[i];
-        const showSong = epData?.song && (d.status === "ELIM" || d.status === "BTM2" || d.status === "WIN" || d.status === "TOP2" || d.status === "DSHANTAY" || d.status === "BTM_BADUNK" || d.status === "BTM_BADUNK_PINK") && !outcome && !d.lalaRound;
-        if(showSong) mini += `<span class="song-label">🎤 ${epData.song}</span>`;
-        h += `<td class="stat-cell ${cellStatus}">${txt}${mini}</td>`;
+        if(d.beaver) mini += `<span class="mini-label">馃Λ BEAVER</span>`;
+        // Apply red shades ONLY to bracket-final lalaparuza elim cells
+        let cellExtra = "";
+        if(d.bracketLala && d.lalaRound && cellStatus === "ELIM"){
+          cellExtra = " ELIM_R" + d.lalaRound;
+        }
+        // CUNT WIN sub-label
+        let cuntLabel = "";
+        if(cellStatus === "WIN_CUNT" && d.cuntSub){
+          cuntLabel = `<span class="cunt-sub">${d.cuntSub}</span>`;
+          txt = "WIN";
+        }
+        h += `<td class="stat-cell ${cellStatus}${cellExtra}">${txt}${cuntLabel}${mini}</td>`;
       });
-      let pSum=0,c=0; const pts={"WIN":5,"TOP2":5,"WIN_GG":5,"HIGH":4,"HIGH_TEAM":4,"SAFE":3,"SAVED":3,"LOW":2,"BTM2":1,"BTM_BADUNK":1,"BTM_BADUNK_PINK":1,"DSHANTAY":1,"ELIM":0,"ELIM_GOLD":0,"QUIT":0,"WINNER":5,"RUNNERUP":4};
+      let pSum=0,c=0; const pts={"WIN":5,"TOP2":5,"WIN_GG":5,"WIN_CUNT":5,"HIGH":4,"HIGH_TEAM":4,"SAFE":3,"SAVED":3,"LOW":2,"BTM2":1,"BTM_BADUNK":1,"BTM_BADUNK_PINK":1,"DSHANTAY":1,"ELIM":0,"ELIM_GOLD":0,"QUIT":0,"WINNER":5,"RUNNERUP":4};
       q.track.forEach(t => { if(pts[t.status]!==undefined){ pSum+=pts[t.status]; c++; }});
       if(isBracket) h += `<td>${q.points ?? 0}</td>`;
       h += `<td>${c?(pSum/c).toFixed(2):"-"}</td></tr>`;
     });
   });
-  document.getElementById("tableOutput").innerHTML = h + "</tbody></table></div>" + renderLalaparuzaSummary();
+  document.getElementById("tableOutput").innerHTML = h + "</tbody></table></div>" + renderLalaparuzaSummary() + renderSongsPanel() + renderBracketLalaparuzaPlacements();
 
   if(eps.length) document.getElementById("historyBar").style.display = "block";
+}
+
+
+
+function renderBracketLalaparuzaPlacements(){
+  if(!SIM) return "";
+  const lalaEps = SIM.eps.filter(e => e.bracketLala && e.lalaRounds && e.lalaRounds.length);
+  if(!lalaEps.length) return "";
+  let h = `<div class="bracket-panel" style="background:#f5f0ff;border-color:#9b59d0"><h3>馃弳 Coloca莽玫es finais 鈥?Bracket / Lalaparuza</h3>`;
+  lalaEps.forEach(ep => {
+    const r1 = ep.lalaRounds[0]?.duels || [];
+    const r2 = ep.lalaRounds[1]?.duels || [];
+    const r3 = ep.lalaRounds[2]?.duels || [];
+    const fifth_eighth = r1.map(d => d.loser);
+    const third_fourth = r2.map(d => d.loser);
+    const runner = r3[0]?.loser;
+    const winner = r3[0]?.winner;
+    h += `<div class="bracket-log-card" style="border-left-color:#9b59d0">
+      <b>${ep.label || ('Ep.'+ep.num)} 鈥?${ep.name}</b>
+      <ul style="margin:6px 0 0 18px;padding:0">
+        <li><b>1潞 (Winner):</b> ${winner||'-'}</li>
+        <li><b>2潞 (Runner-up):</b> ${runner||'-'}</li>
+        <li><b>3潞/4潞:</b> ${third_fourth.join(' 路 ')||'-'}</li>
+        <li><b>5潞/8潞:</b> ${fifth_eighth.join(' 路 ')||'-'}</li>
+      </ul>
+    </div>`;
+  });
+  h += `</div>`;
+  return h;
+}
+
+function renderSongsPanel(){
+  if(!SIM) return "";
+  const items = [];
+  SIM.eps.forEach((ep, idx) => {
+    if(ep.lalaRounds && ep.lalaRounds.length){
+      // handled by lalaparuza summary instead
+      return;
+    }
+    if(ep.cuntLipsync){
+      const ls = ep.cuntLipsync;
+      items.push(`<li><span class="ep-tag">Ep.${ep.num} 路 CUNT</span><b>${ls.a}</b> vs <b>${ls.b}</b> 鈥?"<i>${ls.song}</i>"</li>`);
+      return;
+    }
+    if(!ep.song) return;
+    // find lipsyncers (queens whose cell at this ep is BTM2/ELIM/DSHANTAY/BTM_BADUNK*)
+    const ls = SIM.cast.filter(q => {
+      const c = q.track[idx]; if(!c) return false;
+      return ["BTM2","ELIM","DSHANTAY","BTM_BADUNK","BTM_BADUNK_PINK"].includes(c.status) && !c.bracketOutcome && !c.lalaRound;
+    });
+    if(ls.length < 2) return;
+    const names = ls.map(q=>q.name);
+    items.push(`<li><span class="ep-tag">Ep.${ep.num}</span><b>${names.join("</b> vs <b>")}</b> 鈥?"<i>${ep.song}</i>"</li>`);
+  });
+  if(!items.length) return "";
+  return `<div class="songs-panel"><h3>馃帳 Lipsync Songs 鈥?Resumo da Temporada</h3><ul>${items.join("")}</ul></div>`;
 }
 
 function renderLalaparuzaSummary(){
   if(!SIM) return "";
   const lalaEps = SIM.eps.filter(e => e.lalaRounds && e.lalaRounds.length);
   if(!lalaEps.length) return "";
-  let h = `<div class="bracket-panel" style="background:#fff0f5;border-color:#ff4d9a"><h3>🎤 Lalaparuza — Rodadas detalhadas</h3>`;
+  let h = `<div class="bracket-panel" style="background:#fff0f5;border-color:#ff4d9a"><h3>馃帳 Lalaparuza 鈥?Rodadas detalhadas</h3>`;
   lalaEps.forEach(ep => {
-    h += `<div class="bracket-log-card" style="border-left-color:#ff4d9a"><b>${ep.label || ('Ep.'+ep.num)} — ${ep.name}</b>`;
+    h += `<div class="bracket-log-card" style="border-left-color:#ff4d9a"><b>${ep.label || ('Ep.'+ep.num)} 鈥?${ep.name}</b>`;
     ep.lalaRounds.forEach(r => {
       h += `<div style="margin-top:6px"><b>${r.label}</b><ul style="margin:4px 0 0 18px;padding:0">`;
       r.duels.forEach(d => {
-        h += `<li><b>${d.winner}</b> venceu <span style="text-decoration:line-through;opacity:.7">${d.loser}</span> — 🎤 <i>${d.song}</i></li>`;
+        h += `<li><b>${d.winner}</b> venceu <span style="text-decoration:line-through;opacity:.7">${d.loser}</span> 鈥?馃帳 <i>${d.song}</i></li>`;
       });
       h += `</ul></div>`;
     });
@@ -1175,7 +1316,7 @@ function loadHistory(){
 function renderHistoryList(){
   const list = JSON.parse(localStorage.getItem("ddr_history")||"[]");
   document.getElementById("historyList").innerHTML = list.length
-    ? list.map((r,i)=>`<div style="padding:4px 0;border-bottom:1px dotted #ddd">${i+1}. <b>${r.winner}</b> venceu — ${r.date} <button class="btn-mini" onclick="restoreRun(${i})">Ver</button> <button class="btn-mini" onclick="deleteRun(${i})">✕</button></div>`).join('')
+    ? list.map((r,i)=>`<div style="padding:4px 0;border-bottom:1px dotted #ddd">${i+1}. <b>${r.winner}</b> venceu 鈥?${r.date} <button class="btn-mini" onclick="restoreRun(${i})">Ver</button> <button class="btn-mini" onclick="deleteRun(${i})">鉁?/button></div>`).join('')
     : '<span style="color:#999">Nenhuma temporada salva ainda.</span>';
 }
 function saveCurrentRun(){
@@ -1195,13 +1336,13 @@ function deleteRun(i){
   list.splice(i,1); localStorage.setItem("ddr_history", JSON.stringify(list)); renderHistoryList();
 }
 function clearHistory(){
-  if(!confirm("Apagar todo o histórico?")) return;
+  if(!confirm("Apagar todo o hist贸rico?")) return;
   localStorage.removeItem("ddr_history"); renderHistoryList();
 }
 function downloadHistoryHTML(){
   const list = JSON.parse(localStorage.getItem("ddr_history")||"[]");
   const css = document.querySelector("style").innerHTML;
-  const body = list.map((r,i)=>`<h2>Temporada ${i+1} — ${r.winner} (${r.date})</h2>${r.html}`).join('<hr>');
+  const body = list.map((r,i)=>`<h2>Temporada ${i+1} 鈥?${r.winner} (${r.date})</h2>${r.html}`).join('<hr>');
   const blob = new Blob([`<!doctype html><meta charset="utf-8"><style>${css}</style><body>${body}</body>`], {type:"text/html"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob); a.download = `ddr-historico-${Date.now()}.html`; a.click();
@@ -1210,7 +1351,7 @@ function downloadHistoryHTML(){
 function downloadTableImage(fmt){
   const target = document.getElementById("tableOutput");
   if(!target || !target.innerHTML.trim()) return alert("Nada para exportar.");
-  if(typeof html2canvas === "undefined") return alert("html2canvas não carregou.");
+  if(typeof html2canvas === "undefined") return alert("html2canvas n茫o carregou.");
   html2canvas(target, {backgroundColor:"#ffffff", scale:2}).then(canvas => {
     const mime = fmt==="jpeg" ? "image/jpeg" : "image/png";
     const ext = fmt==="jpeg" ? "jpg" : "png";
@@ -1228,7 +1369,7 @@ function onFormatChange(){
   document.getElementById("bracketBox").style.display = isBr ? "block" : "none";
   const twistSection = document.getElementById("twistSection");
   if(twistSection) twistSection.style.display = isBr ? "none" : "block";
-  ["cGG","cActing","cQuit","cDouble","cDoubleSashay","cNoElim","cReturn","cGolden","cBadunk","cLala","cPremNoElim"].forEach(id=>{
+  ["cGG","cActing","cQuit","cDouble","cDoubleSashay","cNoElim","cReturn","cGolden","cBadunk","cLala","cPremNoElim","cCunt"].forEach(id=>{
     const el = document.getElementById(id);
     if(el){ el.disabled = isBr; if(isBr) el.checked = false; }
   });
@@ -1244,7 +1385,7 @@ function onFormatChange(){
 }
 
 function openBracketEditor(){
-  if(selectedNames.length !== 18) return alert("Você precisa de exatamente 18 queens para o formato Bracket.");
+  if(selectedNames.length !== 18) return alert("Voc锚 precisa de exatamente 18 queens para o formato Bracket.");
   document.getElementById("bracketMode").value = "manual";
   if(!bracketsMatchSelected() || BRACKET_CFG.brackets.some(b=>b.length!==6)) randomizeBrackets(false);
   renderBracketEditor();
@@ -1257,7 +1398,7 @@ function bracketsMatchSelected(){
   return flat.length === 18 && new Set(flat).size === 18 && selectedNames.length === 18 && selectedNames.every(n => flat.includes(n));
 }
 function validateBracketConfig(showAlert){
-  if(selectedNames.length !== 18){ if(showAlert) alert("⚠️ Formato Bracket exige EXATAMENTE 18 queens."); return false; }
+  if(selectedNames.length !== 18){ if(showAlert) alert("鈿狅笍 Formato Bracket exige EXATAMENTE 18 queens."); return false; }
   if(!bracketsMatchSelected()){ if(showAlert) alert("Os brackets precisam conter exatamente as 18 queens selecionadas."); return false; }
   const bad = BRACKET_CFG.brackets.map((b,i)=>({i, n:b.length})).filter(x=>x.n!==6);
   if(bad.length){ if(showAlert) alert("Cada bracket precisa ter exatamente 6 queens."); return false; }
@@ -1265,7 +1406,7 @@ function validateBracketConfig(showAlert){
 }
 
 function randomizeBrackets(rerender){
-  if(selectedNames.length !== 18) return alert("São necessárias exatamente 18 queens.");
+  if(selectedNames.length !== 18) return alert("S茫o necess谩rias exatamente 18 queens.");
   const sh = shuffle(selectedNames);
   BRACKET_CFG.brackets = [sh.slice(0,6), sh.slice(6,12), sh.slice(12,18)];
   BRACKET_CFG.alliances = [[],[],[]];
@@ -1295,7 +1436,7 @@ function clearAlliances(){
 }
 
 function renderBracketEditor(){
-  const labels = ["Bracket 1 · Laranja","Bracket 2 · Rosa","Bracket 3 · Roxo"];
+  const labels = ["Bracket 1 路 Laranja","Bracket 2 路 Rosa","Bracket 3 路 Roxo"];
   const colors = ["BRACKET_A","BRACKET_B","BRACKET_C"];
   let h = "";
   BRACKET_CFG.brackets.forEach((br, bi) => {
@@ -1307,17 +1448,17 @@ function renderBracketEditor(){
         ${n}
         <select onchange="moveQueen('${escAttr(n)}',this.value)" style="font-size:10px;padding:2px;width:auto;margin-left:6px">
           <option value="${bi}">${labels[bi]}</option>
-          ${[0,1,2].filter(i=>i!==bi).map(i=>`<option value="${i}">→ ${labels[i]}</option>`).join('')}
+          ${[0,1,2].filter(i=>i!==bi).map(i=>`<option value="${i}">鈫?${labels[i]}</option>`).join('')}
         </select>
       </div>`;
     });
     h += `</div>`;
     h += `<div style="margin-top:10px;padding-top:8px;border-top:1px dashed #ccc">
-      <b style="font-size:11px">Alianças:</b><br>
+      <b style="font-size:11px">Alian莽as:</b><br>
       <select id="alA${bi}" style="width:auto;display:inline-block;font-size:11px">${br.map(n=>`<option value="${n}">${n}</option>`).join('')}</select>
       <select id="alB${bi}" style="width:auto;display:inline-block;font-size:11px">${br.map(n=>`<option value="${n}">${n}</option>`).join('')}</select>
       <button class="btn-mini" onclick="addAlliance(${bi})">+ Aliar</button>
-      <div style="margin-top:6px;font-size:10px">${BRACKET_CFG.alliances[bi].map((p,pi)=>`<span style="background:#ffd1dc;padding:3px 8px;border-radius:10px;margin:2px;display:inline-block">${p[0]} ⟷ ${p[1]} <span style="cursor:pointer;color:#a00" onclick="removeAlliance(${bi},${pi})">✕</span></span>`).join('') || '<i style="color:#999">Nenhuma aliança</i>'}</div>
+      <div style="margin-top:6px;font-size:10px">${BRACKET_CFG.alliances[bi].map((p,pi)=>`<span style="background:#ffd1dc;padding:3px 8px;border-radius:10px;margin:2px;display:inline-block">${p[0]} 鉄?${p[1]} <span style="cursor:pointer;color:#a00" onclick="removeAlliance(${bi},${pi})">鉁?/span></span>`).join('') || '<i style="color:#999">Nenhuma alian莽a</i>'}</div>
     </div>`;
     h += `</div>`;
   });
@@ -1362,10 +1503,13 @@ function bracketColorClass(i){ return ["br1","br2","br3"][i]; }
 function bracketStatusClass(i){ return ["BRACKET_A","BRACKET_B","BRACKET_C"][i]; }
 
 function runBracketSimulation(stepMode){
-  if(selectedNames.length !== 18) return alert("⚠️ Formato Bracket exige EXATAMENTE 18 queens. Você tem "+selectedNames.length+".");
+  if(selectedNames.length !== 18) return alert("鈿狅笍 Formato Bracket exige EXATAMENTE 18 queens. Voc锚 tem "+selectedNames.length+".");
   const mode = document.getElementById("bracketMode").value;
   if(mode === "random") randomizeBrackets(false);
   if(!validateBracketConfig(true)) return;
+  const aMode = document.getElementById("allianceMode")?.value || "random";
+  if(aMode === "random") randomizeAlliances();
+  else if(aMode === "none") BRACKET_CFG.alliances = [[],[],[]];
 
   const cast = selectedNames.map(n => ({
     name:n, track:[], out:false, rank:99, wins:0, outEp:999, returned:false, badunkUsed:false,
@@ -1428,17 +1572,17 @@ function ensureCell(q, idx){
 function chooseDonationTarget(S, donor, bracketActive, win, top2, safes){
   const allies = S.allies(donor.name).map(n=>S.byName[n]).filter(q=>!q.out && q.bracket===donor.bracket && q!==donor);
   if(allies.length && Math.random() < 0.78){
-    return {target: allies.sort((a,b)=> (b.points+b.score) - (a.points+a.score))[0], reason:"aliança"};
+    return {target: allies.sort((a,b)=> (b.points+b.score) - (a.points+a.score))[0], reason:"alian莽a"};
   }
   const reciprocal = bracketActive.filter(q => q!==donor && q.donated?.some(d => d.to === donor.name));
   if(reciprocal.length && Math.random() < 0.35){
     return {target: reciprocal.sort((a,b)=>b.points-a.points)[0], reason:"troca de pontos"};
   }
   const needsPoints = bracketActive.filter(q=>q!==donor).slice().sort((a,b)=> a.points-b.points || b.score-a.score);
-  if(Math.random() < 0.35 && needsPoints.length) return {target: needsPoints[0], reason:"estratégia"};
+  if(Math.random() < 0.35 && needsPoints.length) return {target: needsPoints[0], reason:"estrat茅gia"};
   if(Math.random() < 0.45) return {target: win, reason:"convencimento"};
   const others = bracketActive.filter(q=>q!==donor);
-  return {target: others[Math.floor(Math.random()*others.length)] || top2, reason:"aleatório"};
+  return {target: others[Math.floor(Math.random()*others.length)] || top2, reason:"aleat贸rio"};
 }
 
 function runBracketPhase1Episode(){
@@ -1544,7 +1688,7 @@ function doWildcard(){
   const mode = document.getElementById("wildcardMode").value;
   if(mode === "prompt"){
     const list = allElim.map((q,i)=>`${i+1}. ${q.name} (${bracketLabel(q.bracket)}, ${q.points} pts)`).join("\n");
-    const pick = prompt(`🃏 WILDCARD! Quem retorna?\n\n${list}\n\nDigite o número:`);
+    const pick = prompt(`馃儚 WILDCARD! Quem retorna?\n\n${list}\n\nDigite o n煤mero:`);
     chosen = allElim[parseInt(pick)-1] || allElim[Math.floor(Math.random()*allElim.length)];
   } else {
     chosen = allElim[Math.floor(Math.random()*allElim.length)];
@@ -1584,7 +1728,7 @@ function runBracketSnatchOrTalent(chalName){
 function runBracketLalaparuzaFinal(){
   const S = SIM;
   S.cast.forEach(q => padBracketTrack(q));
-  const ep = {num: 12, name: "Lalaparuza Grand Finale", label:"EP12", lalaRounds:[]};
+  const ep = {num: 12, name: "Lalaparuza Grand Finale", label:"EP12", lalaRounds:[], bracketLala:true};
   S.eps.push(ep);
   const eight = S.finalists8.filter(q=>!q.out);
 
@@ -1605,13 +1749,13 @@ function runBracketLalaparuzaFinal(){
   }
 
   const r1 = duelRound(eight, "Round 1 (Top 8)");
-  r1.losers.forEach((q,i)=>{ q.out=true; q.outEp=12; q.rank = 8-i; q.track.push({status:"ELIM", mini:false, lalaRound:1}); S.eliminated.push(q); });
+  r1.losers.forEach((q,i)=>{ q.out=true; q.outEp=12; q.rank = 8-i; q.track.push({status:"ELIM", mini:false, lalaRound:1, bracketLala:true}); S.eliminated.push(q); });
   const r2 = duelRound(r1.winners, "Round 2 (Top 4)");
-  r2.losers.forEach((q,i)=>{ q.out=true; q.outEp=12; q.rank=4-i; q.track.push({status:"ELIM", mini:false, lalaRound:2}); S.eliminated.push(q); });
+  r2.losers.forEach((q,i)=>{ q.out=true; q.outEp=12; q.rank=4-i; q.track.push({status:"ELIM", mini:false, lalaRound:2, bracketLala:true}); S.eliminated.push(q); });
   const r3 = duelRound(r2.winners, "Round 3 (Final)");
   const winner = r3.winners[0], runner = r3.losers[0];
-  winner.wins++; winner.track.push({status:"WINNER", mini:false, lalaRound:3}); winner.rank=0;
-  runner.track.push({status:"RUNNERUP", mini:false, lalaRound:3}); runner.rank=1;
+  winner.wins++; winner.track.push({status:"WINNER", mini:false, lalaRound:3, bracketLala:true}); winner.rank=0;
+  runner.track.push({status:"RUNNERUP", mini:false, lalaRound:3, bracketLala:true}); runner.rank=1;
   S.cast.forEach(q => { while(q.track.length < S.eps.length) q.track.push({status:"NONE", mini:false}); });
   S.finished = true;
 }
@@ -1620,30 +1764,30 @@ function renderBracketTable(){
   renderTable();
   if(!SIM || SIM.mode !== "bracket") return;
   const S = SIM;
-  let h = `<div class="bracket-panel"><h3>📊 Doações, Pontos & Cortes do Bracket</h3>`;
+  let h = `<div class="bracket-panel"><h3>馃搳 Doa莽玫es, Pontos & Cortes do Bracket</h3>`;
   S.log.forEach(L => {
     if(L.cut){
       h += `<div class="bracket-cut"><b>${L.label}</b><br>
-        <b>Avançaram:</b> ${L.advance.map(q=>`${q.name} (${q.points} pts)`).join(' · ')}<br>
-        <b>Eliminadas:</b> ${L.eliminated.map(q=>`${q.name} (${q.points} pts)`).join(' · ')}</div>`;
+        <b>Avan莽aram:</b> ${L.advance.map(q=>`${q.name} (${q.points} pts)`).join(' 路 ')}<br>
+        <b>Eliminadas:</b> ${L.eliminated.map(q=>`${q.name} (${q.points} pts)`).join(' 路 ')}</div>`;
       return;
     }
     const brLabel = bracketLabel(L.bracket);
     h += `<div class="bracket-log-card ${bracketColorClass(L.bracket)}">
-      <b>${L.label} — ${brLabel} · ${L.category}: ${L.chal}</b><br>
-      <div><b>Doações:</b> ${L.donations.length ? L.donations.map(d=>`${d.from} → ${d.to} <span style="color:#777">(${d.reason})</span>`).join(' · ') : '<i>—</i>'}</div>
-      <div><b>Tabela atual:</b> ${L.standings.map((s,i)=>`${i+1}. ${s.name} (${s.points} pts)`).join(' · ')}</div>
+      <b>${L.label} 鈥?${brLabel} 路 ${L.category}: ${L.chal}</b><br>
+      <div><b>Doa莽玫es:</b> ${L.donations.length ? L.donations.map(d=>`${d.from} 鈫?${d.to} <span style="color:#777">(${d.reason})</span>`).join(' 路 ') : '<i>鈥?/i>'}</div>
+      <div><b>Tabela atual:</b> ${L.standings.map((s,i)=>`${i+1}. ${s.name} (${s.points} pts)`).join(' 路 ')}</div>
     </div>`;
   });
   if(S.phase1EliminatedAll.length){
-    h += `<div class="bracket-cut"><b>Eliminações dos 3 brackets:</b>`;
+    h += `<div class="bracket-cut"><b>Elimina莽玫es dos 3 brackets:</b>`;
     [0,1,2].forEach(i => {
       const elim = S.phase1EliminatedAll.filter(q=>q.bracket===i).slice().sort((a,b)=> a.name.localeCompare(b.name));
-      if(elim.length) h += `<div><b>${bracketLabel(i)}:</b> ${elim.map(q=>`${q.name} (${q.pointsAtCut} pts${q.returned ? ', Wildcard' : ''})`).join(' · ')}</div>`;
+      if(elim.length) h += `<div><b>${bracketLabel(i)}:</b> ${elim.map(q=>`${q.name} (${q.pointsAtCut} pts${q.returned ? ', Wildcard' : ''})`).join(' 路 ')}</div>`;
     });
     h += `</div>`;
   }
-  if(S.wildcard) h += `<div class="bracket-cut" style="background:#fffbe8"><b>🃏 Wildcard:</b> ${S.wildcard} retornou.</div>`;
+  if(S.wildcard) h += `<div class="bracket-cut" style="background:#fffbe8"><b>馃儚 Wildcard:</b> ${S.wildcard} retornou.</div>`;
   h += `</div>`;
   document.getElementById("tableOutput").insertAdjacentHTML('beforeend', h);
 }
